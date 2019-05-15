@@ -29,6 +29,7 @@ import javax.inject.*;
  * 
  */
 @Named("orderListModel")
+@RequestScoped
 public class OrderListBean {
     
     @Inject

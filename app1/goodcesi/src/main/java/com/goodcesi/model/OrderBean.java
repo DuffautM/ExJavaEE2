@@ -8,8 +8,11 @@ package com.goodcesi.model;
 import com.goodcesi.business.domain.*;
 import com.goodcesi.business.ordermgmt.OrderManagerLocal;
 import com.goodcesi.qualifier.Authenticated;
+import com.goodcesi.qualifier.ScopeMonitor;
 import java.io.Serializable;
 import java.util.Date;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -38,13 +41,16 @@ import javax.inject.Named;
  * Si le Session Bean Stateful n'est pas associé à un scope CDI, alors il faut des méthodes @Remove pour permettre la destruction de l'instance.
  */
 @Named("orderModel")
-@SessionScoped
+@ScopeMonitor
+@ConversationScoped
 public class OrderBean implements Serializable {//un SFSB n'a pas besoin d'implémenter Serializable pour activer la capacité de passivation
     
     private Item orderedItem;  
     private String ccNumber; 
     private Order order;
     
+    @Inject 
+    Conversation conversation;
     
     @Inject
     @Authenticated
@@ -59,6 +65,8 @@ public class OrderBean implements Serializable {//un SFSB n'a pas besoin d'impl�
         //si la conversation en cours n'est pas une conversation de longue durée
         // promotion en conversation longue durée
        
+        conversation.begin();
+        
         this.orderedItem = i;
         //on crée une commande
         order=new Order(); //status In Progress
@@ -101,6 +109,8 @@ public class OrderBean implements Serializable {//un SFSB n'a pas besoin d'impl�
 
             //on met à jour la base
             orderManager.createOrder(order);
+            
+            conversation.end();
             
            //Si la conversation est de longue durée
            //destruction du bean en fin d'exécution de la méthode

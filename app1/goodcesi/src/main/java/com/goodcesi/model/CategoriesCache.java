@@ -7,8 +7,10 @@ package com.goodcesi.model;
 
 import com.goodcesi.business.catalogmgmt.CatalogManagerLocal;
 import com.goodcesi.business.domain.Category;
+import com.goodcesi.qualifier.ScopeMonitor;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,7 +24,8 @@ import javax.inject.Named;
  * Ce sesion bean ne doit jamais être invoquée dans un contexte transactionnel
  */
 @Named
-@RequestScoped
+@ApplicationScoped
+@ScopeMonitor
 public class CategoriesCache {
     
     private  List<Category> categories;

@@ -8,6 +8,7 @@ package com.goodcesi.model;
 import com.goodcesi.business.catalogmgmt.CatalogManager;
 import com.goodcesi.business.catalogmgmt.CatalogManagerLocal;
 import com.goodcesi.business.domain.*;
+import com.goodcesi.qualifier.ScopeMonitor;
 import java.util.*;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -21,6 +22,7 @@ import javax.inject.Named;
  */
 @Named("catalogModel")
 @RequestScoped
+@ScopeMonitor
 public class CatalogBean{
     
     @Inject
