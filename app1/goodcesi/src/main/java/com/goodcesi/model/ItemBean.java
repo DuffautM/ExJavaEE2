@@ -7,6 +7,7 @@ package com.goodcesi.model;
 
 import com.goodcesi.business.catalogmgmt.CatalogManagerLocal;
 import com.goodcesi.business.domain.*;
+import com.goodcesi.qualifier.Authenticated;
 import com.goodcesi.qualifier.ScopeMonitor;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -30,7 +31,9 @@ public class ItemBean implements Serializable{
     @Inject
     private CatalogManagerLocal catalogManager;
     
-    @Inject CurrentUser currentUser;
+    @Inject
+    @Authenticated
+    CurrentUser currentUser;
     
     @Inject Conversation conversation;
     

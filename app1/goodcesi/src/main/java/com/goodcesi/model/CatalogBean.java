@@ -11,6 +11,7 @@ import com.goodcesi.business.domain.*;
 import java.util.*;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -22,7 +23,8 @@ import javax.inject.Named;
 @RequestScoped
 public class CatalogBean{
     
-    private CatalogManagerLocal catalogManager = new CatalogManager();
+    @Inject
+    private CatalogManagerLocal catalogManager;
     
     private List<Item> itemsFromCategory;
     
